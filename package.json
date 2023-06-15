@@ -1,0 +1,20 @@
+{
+  "name": "mathml-elements-test-page",
+  "version": "1.0.0",
+  "description": "Examples of the elements of MathML Core.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Chris Wrench <c.g.wrench@gmail.com>",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "@11ty/eleventy": "2.0.1",
+    "markdown-it-anchor": "8.6.7",
+    "markdown-it-attrs": "4.1.6",
+    "markdown-it-footnote": "3.0.3",
+    "markdown-it-table-of-contents": "0.6.0",
+    "smartypants": "0.1.6"
+  }
+}

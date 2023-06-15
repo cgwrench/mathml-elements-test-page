@@ -1,0 +1,14 @@
+{
+    "title": "MathML Core elements test page",
+    "url": "https://mathml-elements-test-page.netlify.app/",
+    "language": "en-GB",
+    "description": "Examples of the elements of MathML Core.",
+    "author": {
+        "name": "Chris Wrench",
+        "email": "cgwrench@gmail.com",
+        "url": "https://github.com/cgwrench/"
+    },
+    "repository": {
+        "url": "https://github.com/cgwrench/mathml-elements-test-page/blob/main"
+    }
+}

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MathML Core elements test page</title>
+    <meta name="description" content="Examples of the elements of MathML Core.">
+</head>
+<body>
+    <main>
+        <h1 id="mathml-core-elements-test-page">MathML Core elements test page</h1>
+<p>This page includes examples of most of
+<a href="https://www.w3.org/TR/mathml-core/#mathml-elements-and-attributes">the elements of MathML Core</a>.</p>
+<p>Many of the samples and descriptions included here are adapted from the
+<a href="https://www.w3.org/TR/mathml-core/">MathML Core specification</a>.</p>
+<p>This page was last updated on 15 June 2023.</p>
+<p>If you’ve got any questions or comments about this page, or if you’ve found a
+mistake, please <a href="mailto:cgwrench@gmail.com">get in touch</a>.</p>
+<style>
+[hidden] {
+    display: none !important;
+}
+</style>
+<p id="browser-support-message" hidden>
+    <strong>Note</strong>: MathML Core is <strong>not supported</strong> in
+    your web browser. The examples on this page might not look right.
+</p>
+<script>
+  var element = document.getElementById("browser-support-message");
+  if (!mathMLSupported()) {
+      element.hidden = false;
+  }
+  // Detect support for MathML, based on
+  // https://github.com/mathjax/MathJax/issues/182
+  function mathMLSupported() {
+      const div = document.createElement("div");
+      div.style.position = "absolute";
+      div.style.visibility = "hidden";
+      div.innerHTML = "<math><mfrac><mi>xx</mi><mi>yy</mi></mfrac></math>";
+      document.body.appendChild(div);
+      const isMathMLSupported = div.offsetHeight > div.offsetWidth;
+      div.parentNode.removeChild(div);
+      return isMathMLSupported;
+  }
+</script>
+<!-- TODO write blog article on fallback for MathML
+
+    - https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#fallback_for_browsers_without_mathml_support
+    - https://masasakano.github.io/mathml_mathjax_js/#background
+    - https://fred-wang.github.io/mathml.css/mathml.css
+    - https://www.w3.org/TR/mathml-core/#user-agent-stylesheet
+
+ -->
+<!-- TODO fallback content, use MathJax, CSS?
+        Only if there is actually a MathML element on the page, e.g.:
+        const namespaceURI = "http://www.w3.org/1998/Math/MathML";
+        if (document.body.getElementsByTagNameNS(namespaceURI, "math")[0]) {
+            if (!mathMLSupported()) {
+                const script = document.createElement("script");
+                // TODO self-host this.
+                script.src = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML";
+                document.head.appendChild(script);
+            }
+        }
+ -->
+<!-- https://github.com/fred-wang/mathml-warning.js/blob/gh-pages/mpadded.js -->
+<!-- TODO See https://fred-wang.github.io/mathml-warning.js/ -->
+<!-- TODO See CSS in https://w3c.github.io/mathml-core/#the-top-level-math-element -->
+<p><nav aria-labelledby="toc-heading">    <h2 id="toc-heading">Table of contents</h2>
+<ul><li><a href="#the-top-level-math-element">The top-level math element</a></li><li><a href="#token-elements">Token elements</a><ul><li><a href="#text">Text</a></li><li><a href="#identifiers">Identifiers</a></li><li><a href="#numbers">Numbers</a></li><li><a href="#operators">Operators</a></li><li><a href="#space">Space</a></li><li><a href="#string-literals">String literals</a></li></ul></li><li><a href="#layout-elements">Layout elements</a><ul><li><a href="#group-sub-expressions">Group sub-expressions</a></li><li><a href="#fractions">Fractions</a></li><li><a href="#radicals">Radicals</a></li><li><a href="#style-change">Style change</a></li><li><a href="#error-message">Error message</a></li><li><a href="#adjust-space-around-content">Adjust space around content</a></li><li><a href="#making-sub-expressions-invisible">Making sub-expressions invisible</a></li></ul></li><li><a href="#scripts-and-limits">Scripts and limits</a><ul><li><a href="#subscripts-and-superscripts">Subscripts and superscripts</a></li><li><a href="#underscripts-and-overscripts">Underscripts and overscripts</a></li><li><a href="#prescripts-and-tensor-indices">Prescripts and tensor indices</a></li></ul></li><li><a href="#tabular-math-elements">Tabular math elements</a></li><li><a href="#enlivening-expressions">Enlivening expressions</a></li><li><a href="#semantics-and-presentation">Semantics and presentation</a></li></ul></nav></p>
+<h2 id="the-top-level-math-element" tabindex="-1"><a href="#the-top-level-math-element"><span>The top-level <code>math</code> element</span></a></h2>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-math"><code>math</code></a> element represents the root of each instance of MathML
+markup within a <abbr title="HyperText Markup Language">HTML</abbr> document.
+All the other elements of MathML must be descendants of this element.</p>
+<p>Each of the examples below is contained within a <code>math</code> element.</p>
+<h2 id="token-elements" tabindex="-1"><a href="#token-elements"><span>Token elements</span></a></h2>
+<h3 id="text" tabindex="-1"><a href="#text"><span>Text</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mtext"><code>mtext</code></a> element represents arbitrary text that should be rendered
+as itself. This element is intended to denote commentary text.</p>
+<p>In the following example, the <code>mtext</code> element is used to put conditional words
+in a definition.</p>
+<math>
+  <mi>y</mi>
+  <mo>=</mo>
+  <mrow>
+    <msup>
+      <mi>x</mi>
+      <mn>2</mn>
+    </msup>
+    <mtext>&nbsp;if&nbsp;</mtext>
+    <mrow>
+      <mi>x</mi>
+      <mo>≥</mo>
+      <mn>1</mn>
+    </mrow>
+    <mtext>&nbsp;and&nbsp;</mtext>
+    <mn>2</mn>
+    <mtext>&nbsp;otherwise.</mtext>
+  </mrow>
+</math>
+<h3 id="identifiers" tabindex="-1"><a href="#identifiers"><span>Identifiers</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mi"><code>mi</code></a> element represents a symbolic name or arbitrary text that should
+be rendered as an identifier. Identifiers can include variables, function
+names, and symbolic constants.</p>
+<p>In the following example, the <code>mi</code> element is used to render variables and
+function names.</p>
+<math>
+  <mi>cos</mi>
+  <mo>,</mo>
+  <mi>c</mi>
+  <mo>,</mo>
+  <mi mathvariant="normal">c</mi>
+</math>
+<h3 id="numbers" tabindex="-1"><a href="#numbers"><span>Numbers</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mn"><code>mn</code></a> element represents a numeric literal or other data that should
+be rendered as a numeric literal.</p>
+<p>In the following example, the <code>mn</code> element is used to write the mathematical
+constant <a href="https://en.wikipedia.org/wiki/Pi">π</a>.</p>
+<math>
+  <mn>3.141592653589793</mn>
+</math>
+<h3 id="operators" tabindex="-1"><a href="#operators"><span>Operators</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mo"><code>mo</code></a> element represents an operator or other data, such as fences,
+separators and accents, that should be rendered as an operator.</p>
+<p>In the following example, the <code>mo</code> element is used to represent the summation
+symbol.</p>
+<math>
+  <mrow displaystyle="true">
+  <munder>
+    <mo>∑</mo>
+    <mn>5</mn>
+  </munder>
+  <munder>
+    <mo largeop="false">∑</mo>
+    <mn>6</mn>
+  </munder>
+  </mrow>
+  <mrow>
+    <munder>
+      <mo>∑</mo>
+      <mn>5</mn>
+    </munder>
+    <munder>
+      <mo movablelimits="false">∑</mo>
+      <mn>7</mn>
+    </munder>
+  </mrow>
+</math>
+<h3 id="space" tabindex="-1"><a href="#space"><span>Space</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mspace"><code>mspace</code></a> element represents a blank space.</p>
+<p>In the following example, the <code>mspace</code> element is used to force spacing within
+the formula (a 1px blue border is added to visualize the space).</p>
+<math>
+  <mn>1</mn>
+  <mspace width="1em" style="border-top: 1px solid blue"/> 
+  <mfrac>
+    <mrow>
+      <mn>2</mn>
+      <mspace depth="1em" style="border-left: 1px solid blue"/>
+    </mrow>
+    <mrow>
+      <mn>3</mn>
+      <mspace height="2em" style="border-left: 1px solid blue"/>
+    </mrow>
+  </mfrac>
+</math>
+<h3 id="string-literals" tabindex="-1"><a href="#string-literals"><span>String literals</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-ms"><code>ms</code></a> element represents string literals in expressions meant to be
+interpreted by computer algebra systems or other systems containing programming
+languages.</p>
+<p>In the following example, the <code>ms</code> element is used to write a literal string of
+characters.</p>
+<math>
+  <mi>s</mi>
+  <mo>=</mo>
+  <ms>"hello world"</ms>
+</math>
+<h2 id="layout-elements" tabindex="-1"><a href="#layout-elements"><span>Layout elements</span></a></h2>
+<h3 id="group-sub-expressions" tabindex="-1"><a href="#group-sub-expressions"><span>Group sub-expressions</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mrow"><code>mrow</code></a> element represents a group of sub-expressions.</p>
+<p>In the following example, the <code>mrow</code> element is used to group a sum “1 + ⅔”
+as a fraction numerator and to construct a fenced expression that is raised to
+the power of 5.</p>
+<math>
+  <msup>
+    <mrow>
+      <mo>(</mo>
+      <mfrac>
+        <mrow>
+          <mn>1</mn>
+          <mo>+</mo>
+          <mfrac>
+            <mn>2</mn>
+            <mn>3</mn>
+          </mfrac>
+        </mrow>
+        <mn>4</mn>
+      </mfrac>
+      <mo>)</mo>
+    </mrow>
+    <mn>5</mn>
+  </msup>
+</math>
+<h3 id="fractions" tabindex="-1"><a href="#fractions"><span>Fractions</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mfrac"><code>mfrac</code></a> element represents a fraction.</p>
+<p>In the following example, the <code>mfrac</code> element is used to layout four fractions.</p>
+<math>
+  <mn>0</mn>
+  <mo>+</mo>
+  <mfrac displaystyle="true">
+    <mn>1</mn>
+    <mn>2</mn>
+  </mfrac>
+  <mo>−</mo>
+  <mfrac>
+    <mn>1</mn>
+    <mn>2</mn>
+  </mfrac>
+  <mo>+</mo>
+  <mfrac linethickness="200%">
+    <mn>1</mn>
+    <mn>234</mn>
+  </mfrac>
+  <mo>−</mo>
+  <mrow>
+    <mo>(</mo>
+    <mfrac linethickness="0">
+      <mn>123</mn>
+      <mn>4</mn>
+    </mfrac>
+    <mo>)</mo>
+  </mrow>
+</math>
+<h3 id="radicals" tabindex="-1"><a href="#radicals"><span>Radicals</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mroot"><code>mroot</code></a> element represents the
+<a href="https://en.wikipedia.org/wiki/Nth_root"><em>nth root</em></a>. The <a href="https://www.w3.org/TR/mathml-core/#dfn-mroot"><code>msqrt</code></a>
+element represents the
+<a href="https://en.wikipedia.org/wiki/Square_root"><em>square root</em></a>.</p>
+<p>In the following example, the <code>mroot</code> element is used to layout a cube root,
+amd the <code>msqrt</code> element is used to layout a square root.</p>
+<math>
+  <mroot>
+    <msqrt>
+      <mfrac>
+        <mn>1</mn>
+        <mn>2</mn>
+      </mfrac>
+      <mo>+</mo>
+      <mn>4</mn>
+    </msqrt>
+    <mn>3</mn>
+  </mroot>
+  <mo>+</mo>
+  <mn>0</mn>
+</math>
+<h3 id="style-change" tabindex="-1"><a href="#style-change"><span>Style change</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mstyle"><code>mstyle</code></a> element represents a change in style.</p>
+<p>The <cite>MathML Core specification</cite> notes that:</p>
+<blockquote>
+<p><code>&lt;mstyle&gt;</code> is implemented for compatibility with full MathML. Authors whose
+only target is MathML Core are encouraged to use CSS for styling.</p>
+</blockquote>
+<!-- No example yet -->
+<h3 id="error-message" tabindex="-1"><a href="#error-message"><span>Error message</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-merror"><code>merror</code></a> element represents an error message.</p>
+<p>In the following example, the <code>merror</code> element is used to indicate a parsing
+error for some LaTeX-like input.</p>
+<math>
+  <mfrac>
+    <merror>
+      <mtext>Syntax error: \frac{1}</mtext>
+    </merror>
+    <mn>3</mn>
+  </mfrac>
+</math>
+<h3 id="adjust-space-around-content" tabindex="-1"><a href="#adjust-space-around-content"><span>Adjust space around content</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mpadded"><code>mpadded</code></a> element represents space around it’s content.</p>
+<p>In the following example, the <code>mpadded</code> element is used to adjust spacing
+around a fraction (a blue border is used to visualize the space).</p>
+<math>
+  <mrow>
+    <mn>1</mn>
+    <mpadded style="border: 1px solid blue;">
+      <mfrac>
+        <mn>23456</mn>
+        <mn>78</mn>
+      </mfrac>
+    </mpadded>
+    <mn>9</mn>
+  </mrow>
+  <mo>+</mo>
+  <mrow>
+    <mn>1</mn>
+    <mpadded lspace="2em" voffset="-1em" height="1em" depth="3em" width="7em"
+      style="border: 1px solid blue;">
+      <mfrac>
+        <mn>23456</mn>
+        <mn>78</mn>
+      </mfrac>
+    </mpadded>
+    <mn>9</mn>
+  </mrow>
+</math>
+<h3 id="making-sub-expressions-invisible" tabindex="-1"><a href="#making-sub-expressions-invisible"><span>Making sub-expressions invisible</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mphantom"><code>mphantom</code></a> element represents content that is invisible, but
+which still affects layout.</p>
+<p>The <cite>MathML Core specification</cite> notes that:</p>
+<blockquote>
+<p><code>&lt;mphantom&gt;</code> is implemented for compatibility with full MathML. Authors whose
+only target is MathML Core are encouraged to use CSS for styling.</p>
+</blockquote>
+<!-- No example yet -->
+<h2 id="scripts-and-limits" tabindex="-1"><a href="#scripts-and-limits"><span>Scripts and limits</span></a></h2>
+<h3 id="subscripts-and-superscripts" tabindex="-1"><a href="#subscripts-and-superscripts"><span>Subscripts and superscripts</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-msub"><code>msub</code></a> and <a href="https://www.w3.org/TR/mathml-core/#dfn-msup"><code>msup</code></a> elements represent subscripts and
+superscripts respectively. The <a href="https://www.w3.org/TR/mathml-core/#dfn-msubsup"><code>msubsup</code></a> element is used to layout
+both a subscript and superscript.</p>
+<p>In the following example, the <code>msub</code>, <code>msubsup</code> and <code>msup</code> elements are used to
+layout subscripts and superscripts.</p>
+<math>
+  <msub>
+    <mn>1</mn>
+    <mn>2</mn>
+  </msub>
+  <mo>+</mo>
+  <msup>
+    <mn>3</mn>
+    <mn>4</mn>
+  </msup>
+  <mo>+</mo>
+  <msubsup>
+    <mn>5</mn>
+    <mn>6</mn>
+    <mn>7</mn>
+  </msubsup>
+</math>
+<h3 id="underscripts-and-overscripts" tabindex="-1"><a href="#underscripts-and-overscripts"><span>Underscripts and overscripts</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mover"><code>mover</code></a> and <a href="https://www.w3.org/TR/mathml-core/#dfn-munder"><code>munder</code></a> elements represent accents or
+limits placed under and over a MathML expression respectively.</p>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-msubsup"><code>munderover</code></a> element is used to layout an accent or
+limit place both under and over a MathML expression.</p>
+<p>In the following example, the <code>mover</code>, <code>munder</code> and <code>munderover</code> elements are used
+to layout under and over scripts.</p>
+<math>
+  <munder>
+    <mn>1</mn>
+    <mn>2</mn>
+  </munder>
+  <mo>+</mo>
+  <mover>
+    <mn>3</mn>
+    <mn>4</mn>
+  </mover>
+  <mo>+</mo>
+  <munderover>
+    <mn>5</mn>
+    <mn>6</mn>
+    <mn>7</mn>
+  </munderover>
+  <mo>+</mo>
+  <munderover accent="true">
+    <mn>8</mn>
+    <mn>9</mn>
+    <mn>10</mn>
+  </munderover>
+  <mo>+</mo>
+  <munderover accentunder="true">
+    <mn>11</mn>
+    <mn>12</mn>
+    <mn>13</mn>
+  </munderover>
+</math>
+<h3 id="prescripts-and-tensor-indices" tabindex="-1"><a href="#prescripts-and-tensor-indices"><span>Prescripts and tensor indices</span></a></h3>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mmultiscripts"><code>mmultiscripts</code></a> element represents presubscripts and
+tensor notations, with hints represented by the <a href="https://www.w3.org/TR/mathml-core/#dfn-mprescripts"><code>mprescripts</code></a>
+and <a href="https://www.w3.org/TR/mathml-core/#dfn-none"><code>none</code></a> elements. <code>none</code> represents an empty script.</p>
+<p>In the following example, shows basic use of prescripts and postscripts,
+In the following example, the <code>mmultiscripts</code>, <code>mprescripts</code>, and <code>none</code>
+elements are used to layout prescripts and postscripts.</p>
+<math>
+  <mmultiscripts>
+    <mn>1</mn>
+    <mn>2</mn>
+    <mn>3</mn>
+    <none/>
+    <mn>5</mn>
+    <mprescripts/>
+    <mn>6</mn>
+    <none/>
+    <mn>8</mn>
+    <mn>9</mn>
+  </mmultiscripts>
+</math>
+<h2 id="tabular-math-elements" tabindex="-1"><a href="#tabular-math-elements"><span>Tabular math elements</span></a></h2>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-mtable"><code>mtable</code></a> represents matrices, arrays and other table-like
+mathematical notation. Rows in the table or matrix are represented by the
+<a href="https://www.w3.org/TR/mathml-core/#dfn-mtr"><code>mtr</code></a> element, and entries in the table or matrix are represented by the
+<a href="https://www.w3.org/TR/mathml-core/#dfn-mtd"><code>mtd</code></a> element.</p>
+<p>This example uses the <code>mtable</code>, <code>mtr</code>, and <code>mtd</code> elements to layout a matrix.</p>
+<math>
+  <mfrac>
+    <mi>A</mi>
+    <mn>2</mn>
+  </mfrac>
+  <mo>=</mo>
+  <mrow>
+    <mo>(</mo>
+    <mtable>
+      <mtr>
+        <mtd><mn>1</mn></mtd>
+        <mtd><mn>2</mn></mtd>
+        <mtd><mn>3</mn></mtd>
+      </mtr>
+      <mtr>
+        <mtd><mn>4</mn></mtd>
+        <mtd><mn>5</mn></mtd>
+        <mtd><mn>6</mn></mtd>
+      </mtr>
+      <mtr>
+        <mtd><mn>7</mn></mtd>
+        <mtd><mn>8</mn></mtd>
+        <mtd><mn>9</mn></mtd>
+      </mtr>
+    </mtable>
+    <mo>)</mo>
+  </mrow>
+</math>
+<h2 id="enlivening-expressions" tabindex="-1"><a href="#enlivening-expressions"><span>Enlivening expressions</span></a></h2>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#dfn-maction"><code>maction</code></a> element provides a mechanism for binding actions to
+expressions.</p>
+<p>The <cite>MathML Core specification</cite> notes that:</p>
+<blockquote>
+<p><code>&lt;maction&gt;</code> is implemented for compatibility with full MathML. Authors whose
+only target is MathML Core are encouraged to use other HTML, CSS and
+JavaScript mechanisms to implement custom actions.</p>
+</blockquote>
+<!-- No example yet -->
+<h2 id="semantics-and-presentation" tabindex="-1"><a href="#semantics-and-presentation"><span>Semantics and presentation</span></a></h2>
+<p>The <a href="https://www.w3.org/TR/mathml-core/#semantics-and-presentation"><code>semantics</code></a> element is a container element that associates
+annotations, represented by the <a href="https://www.w3.org/TR/mathml-core/#dfn-annotation"><code>annotation</code></a> and
+<a href="https://www.w3.org/TR/mathml-core/#dfn-annotation-xml"><code>annotation-xml</code></a> elements, with a MathML expression.</p>
+<p>In the following example, the fraction “one half” is annotated with both a
+textual (LaTeX) annotation and an XML annotation (content MathML). These
+annotations are not rendered.</p>
+<math>
+  <semantics>
+    <mfrac>
+      <mn>1</mn>
+      <mn>2</mn>
+    </mfrac>
+    <annotation encoding="application/x-tex">\frac{1}{2}</annotation>
+    <annotation-xml encoding="application/mathml-content+xml">
+      <apply>
+        <divide/>
+        <cn>1</cn>
+        <cn>2</cn>
+      </apply>
+    </annotation-xml>
+  </semantics>
+</math>
+
+    </main>
+</body>
+</html>
